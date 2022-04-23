@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 function MarketDetails(props) {
   return (
     <React.Fragment>
-      <button>{props.day}TEST</button>
+      <h3>{props.day}</h3>
       <p>Hours: {props.hours}</p>
       <p>Location: {props.location}</p>
       <p>Booth: {props.booth}</p>

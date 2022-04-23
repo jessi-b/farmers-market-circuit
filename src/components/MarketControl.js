@@ -6,47 +6,37 @@ class MarketControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // detailsDisplayed: false,
-      sunDetails: false
-      // monDetails: false,
-      // tueDetails: false,
-      // wedDetails: false,
-      // thursDetails: false,
-      // friDetails: false,
-      // satDetails: false
+      selectedDay: null
     };
   }
- //handleChangeDisplay = (currentDay) - callback
-  //handler method
+
+  // event handler functions
   handleClick = () => {
-    this.setState(prevState => ({
-      // detailsDisplayed: !prevState.detailsDisplayed
-      sunDetails: !prevState.sunDetails
-      // (this.monDetails): !prevState.monDetails
-      // tueDetails: !prevState.tueDetails
-      // wedDetails: !prevState.
-      // thursDetails: !prevState.
-      // friDetails: !prevState.
-      // satDetails: !prevState.
-    }));
+    if (this.state.selectedDay != null) {
+      this.setState({
+        selectedDay: null
+      });
+    } // possibly need else prevState => ({selectedDay: !prevState.selectedDay
   }
+  handleSelectedDay = (day) => {
+    const selectedDay = this.state.marketSchedule.filter(market => market.day === day)[0];
+    this.setState({selectedDay: selectedDay});
+  }
+
   // render method
   render() {
-    let currentState = null;
-    // let button = null;
-    if (this.state.sunDetails) {  // default: false
-      currentState = <MarketDetails/>
-      // button = "Return to Schedule";
-    } else {
-      currentState = <MarketList/>;
-      //addTicketButton = <button onClick={this.handleClick}>Add ticket</button> // new code
-      
-      // button = "blah";
+    let currentlyVisibleState = null;
+    if (this.state.selectedDay !== null) {
+      currentlyVisibleState = <MarketDetails market = {this.state.selectedDay} />
+      {/* <button onClick={this.handleClick}>{Return to Schedule}</button>  */}
+      let buttonText = "Return to Market Schedule";
+    }
+    else {
+      currentlyVisibleState = <MarketList marketSchedule={this.state.marketSchedule} onSelectedDay={this.handleSelectedDay} />;
     }
     return (
       <React.Fragment>
-        {currentState}
-        <button onClick={this.handleClick}>{this.props.day}</button> 
+        {currentlyVisibleState}
       </React.Fragment>
     )
   }

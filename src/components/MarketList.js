@@ -1,6 +1,7 @@
 import React from "react";
 import Market from "./Market";
-// import MarketDetails from "./MktDisplayDetails";
+import PropTypes from "prop-types";
+//import MarketDetails from "./MktDisplayDetails";
 
 const marketSchedule = [  
   {  
@@ -41,11 +42,13 @@ const marketSchedule = [
   }
 ];
 
-function MarketList() {
+function MarketList(props) {
   return (
     <React.Fragment>
-      {marketSchedule.map((market, index) =>
-      <Market day={market.day}
+      {props.marketSchedule.map((market, index) =>
+      <Market 
+        whenDayClicked = { props.onDaySelection }
+        day={market.day}
         location={market.location}
         hours={market.hours}
         booth={market.booth}
@@ -54,5 +57,10 @@ function MarketList() {
     </React.Fragment>
   );
 }
+
+MarketList.propTypes = {
+  marketSchedule: PropTypes.array,
+  onDaySelection: PropTypes.func
+};
 
 export default MarketList;
